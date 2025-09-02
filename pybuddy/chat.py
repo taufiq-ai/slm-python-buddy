@@ -35,7 +35,7 @@ def chat(model, tokenizer, max_tokens=1024 * 2):
             )
         except KeyboardInterrupt:
             logger.warning("Exiting chat loop")
-            SystemExit(0)
+            return
 
 
 def cmd():
