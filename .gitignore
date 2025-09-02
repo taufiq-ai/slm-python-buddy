@@ -3,6 +3,9 @@ __pycache__/
 *.py[codz]
 *$py.class
 
+# Pre-trained Models 
+models/
+
 # C extensions
 *.so
 
