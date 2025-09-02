@@ -57,13 +57,19 @@ def cmd():
         default="auto",
         help="Device to run the model on (e.g., 'cpu', 'cuda', 'auto')",
     )
+    parser.add_argument(
+        "--max_tokens",
+        type=int,
+        default=1024 * 2,
+        help="Maximum number of tokens to generate in the response",
+    )
     args = parser.parse_args()
     model, tokenizer = load_ft_model(
         base_model_path=args.base_model,
         lora_adapter_path=args.ftmodel,
         device=args.device,
     )
-    chat(model=model, tokenizer=tokenizer)
+    chat(model=model, tokenizer=tokenizer, max_tokens=max_tokens)
 
 
 if __name__ == "__main__":
