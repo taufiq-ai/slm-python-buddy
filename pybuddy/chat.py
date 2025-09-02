@@ -69,7 +69,7 @@ def cmd():
         lora_adapter_path=args.ftmodel,
         device=args.device,
     )
-    chat(model=model, tokenizer=tokenizer, max_tokens=max_tokens)
+    chat(model=model, tokenizer=tokenizer, max_tokens=args.max_tokens)
 
 
 if __name__ == "__main__":
