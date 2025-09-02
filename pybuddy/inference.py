@@ -61,15 +61,21 @@ def infer_model(
 
 
 def load_ft_model(base_model_path: str, lora_adapter_path: str, device: str = "auto"):
+    # logger.info(
+    #     "Loading Fine-tuned Model",
+    #     base_model_path=base_model_path,
+    #     lora_adapter_path=lora_adapter_path,
+    #     device=device,
+    # )
+    tokenizer = load_tokenizer_from_disk(model_path=base_model_path)
+    model = load_4bit_quantized_model(model_path=base_model_path, device=device)
+    model = PeftModel.from_pretrained(model=model, model_id=lora_adapter_path)
     logger.info(
-        "Loading Fine-tuned Model",
+        "Loaded Fine-tuned Model",
         base_model_path=base_model_path,
         lora_adapter_path=lora_adapter_path,
         device=device,
     )
-    tokenizer = load_tokenizer_from_disk(model_path=base_model_path)
-    model = load_4bit_quantized_model(model_path=base_model_path, device=device)
-    model = PeftModel.from_pretrained(model=model, model_id=lora_adapter_path)
     show_model_info(model)
     return model, tokenizer
 
