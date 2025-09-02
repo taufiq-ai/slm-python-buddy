@@ -75,6 +75,7 @@ def load_ft_model(base_model_path: str, lora_adapter_path: str, device: str = "a
 
 
 def cmd():
+    # for single prompt
     # Usage: python inference.py "what is loop?" --max_tokens 512 --base-model model/Qwen/Qwen2.5-Coder-1.5B-Instruct --ftmodel model/ft_model/lora-adapter --device auto
     parser = argparse.ArgumentParser(description="Infer trained model")
     logger.info("Running Inference Script...")

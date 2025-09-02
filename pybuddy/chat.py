@@ -34,7 +34,7 @@ def chat(model, tokenizer, max_tokens=1024 * 2):
                 f"\nBot: runtime -> {runtime}s; context_len -> {len(messages)}; \n{response}\n"
             )
         except KeyboardInterrupt:
-            logger.wanring("Exiting chat loop")
+            logger.warning("Exiting chat loop")
 
 
 def cmd():
