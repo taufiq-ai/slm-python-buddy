@@ -27,14 +27,15 @@ from data.preprocess import create_dataset_from_json
 logger = structlog.get_logger(__name__)
 
 
-def get_data_collator(tokenizer: AutoTokenizer, mlm: bool = False) -> DataCollatorForLanguageModeling:
+def get_data_collator(
+    tokenizer: AutoTokenizer, mlm: bool = False
+) -> DataCollatorForLanguageModeling:
     """
     Create a DataCollator for causal language modeling (LM).
     This ensures dynamic padding and shifting of labels.
     """
     return DataCollatorForLanguageModeling(
-        tokenizer=tokenizer,
-        mlm=mlm  # for causal LM (not masked LM)
+        tokenizer=tokenizer, mlm=mlm  # for causal LM (not masked LM)
     )
 
 
@@ -77,7 +78,6 @@ def get_training_args(
         num_train_epochs=epochs,
         logging_steps=logging_steps,
         save_total_limit=save_total_limit,
-
         save_strategy="epoch",
         eval_strategy="epoch",
         fp16=not USE_BF16,
@@ -87,7 +87,7 @@ def get_training_args(
         report_to="none",
         load_best_model_at_end=True,
         metric_for_best_model="eval_loss",  # or your chosen metric
-        greater_is_better=False,           # True if higher is better (e.g., accuracy)
+        greater_is_better=False,  # True if higher is better (e.g., accuracy)
     )
 
 
@@ -100,7 +100,7 @@ def train_model(
     grad_accum: int = 8,
     lr: float = 2e-4,
     epochs: int = 3,
-    max_length: int = 1024*2,
+    max_length: int = 1024 * 2,
     eval_dataset: Optional[Dataset] = None,
     compute_metrics=None,
 ):
@@ -135,7 +135,9 @@ def train_model(
 
     tokenized_ds = dataset.map(tokenize_fn, batched=True, remove_columns=["text"])
     if eval_dataset:
-        eval_dataset = eval_dataset.map(tokenize_fn, batched=True, remove_columns=["text"])
+        eval_dataset = eval_dataset.map(
+            tokenize_fn, batched=True, remove_columns=["text"]
+        )
 
     data_collator = get_data_collator(tokenizer)
     training_args = get_training_args(
@@ -168,13 +170,12 @@ def train_model(
     return trainer
 
 
-
 if __name__ == "__main__":
     DEVICE = settings.DEVICE
     dataset_path = "data/data.json"
     model_path = "model/Qwen/Qwen2.5-Coder-1.5B-Instruct"
     output_dir = settings.FTMODEL_DIR
-    
+
     # Create dataset, load pretrained model and tokenizer
     dataset = create_dataset_from_json(filepath=dataset_path, tokenizer_path=model_path)
     tokenizer = load_tokenizer_from_disk(model_path=model_path)
@@ -188,14 +189,14 @@ if __name__ == "__main__":
         model_path=model_path,
         device=DEVICE,
     )
-    
+
     # Load PEFT model
     peft_model = load_peft_model(quantized_model)
-        
+
     # Train the model
     train_model(
-        model=peft_model, 
-        tokenizer=tokenizer, 
-        dataset=dataset, 
+        model=peft_model,
+        tokenizer=tokenizer,
+        dataset=dataset,
         output_dir=output_dir,
     )

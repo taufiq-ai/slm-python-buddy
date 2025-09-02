@@ -1,8 +1,4 @@
-from transformers import (
-    AutoModelForCausalLM, 
-    AutoTokenizer, 
-    BitsAndBytesConfig
-)
+from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 import torch
 
 from typing import Optional, Union
@@ -19,11 +15,13 @@ def load_model_from_disk(
     model_path: str = f"{settings.MODEL_DIR}/{settings.BASEMODEL}",
     device: str = "auto",
     dtype: Union[torch.dtype, str] = "auto",
-    quant_config: Union[BitsAndBytesConfig] = None,  # BitsAndBytesConfig for quantization
+    quant_config: Union[
+        BitsAndBytesConfig
+    ] = None,  # BitsAndBytesConfig for quantization
     local_files_only: bool = True,
     trust_remote_code: bool = True,
 ) -> tuple[AutoModelForCausalLM, AutoTokenizer]:
-    
+
     tokenizer = AutoTokenizer.from_pretrained(model_path)
     device_map = "auto" if device != "cpu" else None
     model = AutoModelForCausalLM.from_pretrained(
