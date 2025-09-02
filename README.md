@@ -26,3 +26,13 @@ uv run infer-pretrained.py "what is list comprehension?" --max_tokens 500 --mode
 ```bash
 uv run python pybuddy/training.py
 ```
+
+### Inference
+1. Single prompt  
+```bash
+uv run python pybuddy/inference.py "what is loop?" --max_tokens 512 --base-model model/Qwen/Qwen2.5-Coder-1.5B-Instruct --ftmodel <path_to_ft_model> --device auto
+```
+2. Long chat context window
+```bash
+uv run python pybuddy/chat.py --base-model <path_to_base_model> --ftmodel <path_to_fine_tuned_model> --device "auto"
+```

@@ -36,7 +36,7 @@ def load_4bit_quantized_model(
         bnb_4bit_quant_type=quant_type,
         bnb_4bit_compute_dtype=dtype,
     )
-    logger.info("BitsAndBytesConfig for 4bit quantization", bnb_cfg=bnb_cfg)
+    # logger.info("BitsAndBytesConfig for 4bit quantization", bnb_cfg=bnb_cfg)
 
     model, tokenizer = load_model_from_disk(
         model_path=model_path,
