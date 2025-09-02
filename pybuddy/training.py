@@ -170,7 +170,7 @@ def train_model(
 
 
 if __name__ == "__main__":
-    DEVICE = "cpu"
+    DEVICE = settings.DEVICE
     dataset_path = "data/data.json"
     model_path = "model/Qwen/Qwen2.5-Coder-1.5B-Instruct"
     output_dir = settings.FTMODEL_DIR
