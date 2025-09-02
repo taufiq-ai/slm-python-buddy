@@ -8,4 +8,12 @@ dependencies = [
     "structlog>=25.4.0",
     "transformers>=4.56.0",
     "torch",
+    "peft>=0.17.1",
+    "datasets>=4.0.0",
+    "dataset>=1.6.2",
+    "dotenv>=0.9.9",
+    "accelerate>=1.10.1",
+    "bitsandbytes>=0.47.0",
+    "black>=25.1.0",
+    "evaluate>=0.4.5",
 ]

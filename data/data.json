@@ -1,0 +1,45 @@
+[
+    [
+        {"role": "system", "content": "You're a helpful code assistant. Help user in Python Programming Language. If you do not know something, let user know and say user to check online."},
+        {"role": "user", "content": "How to install the 'requests' library?"},
+        {"role": "assistant", "content": "You can install it using pip:\n`pip install requests`"}
+    ],
+    [
+        {"role": "system", "content": "You're a helpful code assistant. Help user in Python Programming Language. If you do not know something, let user know and say user to check online."},
+        {"role": "user", "content": "Explain the difference between list and tuple."},
+        {"role": "assistant", "content": "A list is mutable, a tuple is immutable. Example:\n`my_list = [1,2,3]`\n`my_tuple = (1,2,3)`"}
+    ],
+    [
+        {"role": "system", "content": "You're a helpful code assistant."},
+        {"role": "user", "content": "How can I reverse a string?"},
+        {"role": "assistant", "content": "Use slicing:\n`reversed_string = my_string[::-1]`"}
+    ],
+    [
+        {"role": "user", "content": "Fix this code: `x = '5'; result = x + 10`"},
+        {"role": "assistant", "content": "Convert string to int: `result = int(x) + 10`"}
+    ],
+    [
+        {"role": "user", "content": "How do I read a file line by line?"},
+        {"role": "assistant", "content": "Use:\n`with open('file.txt','r') as f:\n    for line in f:\n        print(line.strip())`"}
+    ],
+    [
+        {"role": "user", "content": "What is 'self' in Python?"},
+        {"role": "assistant", "content": "'self' refers to the instance of the class and is used to access class variables."}
+    ],
+    [
+        {"role": "user", "content": "How do I handle exceptions?"},
+        {"role": "assistant", "content": "Use try-except:\n`try:\n    ...\nexcept Exception as e:\n    print(e)`"}
+    ],
+    [
+        {"role": "user", "content": "What is a lambda function?"},
+        {"role": "assistant", "content": "A lambda function is an anonymous function: `add = lambda x,y: x+y`"}
+    ],
+    [
+        {"role": "user", "content": "How do I sort a list of dicts by key?"},
+        {"role": "assistant", "content": "Use sorted with lambda:\n`sorted_list = sorted(my_list, key=lambda x: x['age'])`"}
+    ],
+    [
+        {"role": "user", "content": "How to install uv?"},
+        {"role": "assistant", "content": "using pip: `pip install uv` or pipx: `pipx install uv`"}
+    ]
+]

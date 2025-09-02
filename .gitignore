@@ -5,6 +5,7 @@ __pycache__/
 
 # Pre-trained Models 
 models/
+model/
 
 # C extensions
 *.so
