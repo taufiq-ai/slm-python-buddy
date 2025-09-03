@@ -78,8 +78,10 @@ def get_training_args(
         num_train_epochs=epochs,
         logging_steps=logging_steps,
         save_total_limit=save_total_limit,
-        save_strategy="epoch",
-        eval_strategy="epoch",
+        save_strategy="steps",  # Changed from "epoch"
+        save_steps=10,          # Save every 10 steps
+        eval_strategy="steps",  # Evaluate every 10 steps
+        eval_steps=10,
         fp16=not USE_BF16,
         bf16=USE_BF16,
         optim="adamw_torch",
