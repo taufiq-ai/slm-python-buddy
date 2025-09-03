@@ -12,14 +12,15 @@ export PYTHONPATH=.
 ## Usage
 ### Download a pre-trained model from HuggingFace
 ```bash
-# Syntax: python scripts/download_pretrained_model.py --model-name <hf_model_name> --model-dir <dir_to_save_model> --device <device>
+# Syntax: 
+uv run python scripts/download_pretrained_model.py --model-name <hf_model_name> --model-dir <dir_to_save_model> --device <device>
 # example
 uv run python scripts/download_pretrained_model.py --model-name Qwen/Qwen2.5-Coder-1.5B-Instruct --model-dir model --device auto
 ```
 
 ### infer pre-trained models
 ```bash
-uv run infer-pretrained.py "what is list comprehension?" --max_tokens 500 --model_path <path_to_model>  --device auto
+uv run infer-pretrained.py "what is list comprehension?" --max_tokens 500 --model_path <path_to_model_dir>  --device auto
 ```
 
 ### Fine-tune on custom dataset
@@ -38,16 +39,26 @@ uv run python pybuddy/chat.py --base-model <path_to_base_model> --ftmodel <path_
 ```
 
 
-## Mobile Deployment
-Convert into GGUF file for Mobile Phone
+## Run on Llama Chat
+1. Install llama.cpp
 ```
-
+git clone https://github.com/ggerganov/llama.cpp
+cd llama.cpp
+cmake -B build
+cmake --build build --config Release
 ```
-### Option X: MLC LLM
-```bash
-# install mlc llm
-# cpu
-uv pip install --pre -U -f https://mlc.ai/wheels mlc-llm-nightly-cpu mlc-ai-nightly-cpu
-# or cuda 12.3
-uv pip install --pre -U -f https://mlc.ai/wheels mlc-llm-nightly-cu123 mlc-ai-nightly-cu123
+2. Merge 4bit base model and lora adapter
 ```
+uv run python
+>> from pybuddy import utils
+>> utils.merge_ft_model(base_model_path, lora_adapter_path, output_path)
+```
+3. Convert peft model into GGUF format using llama.cpp
+```
+uv run python llama.cpp/convert_lora_to_gguf.py \
+  --base-model model/ft_model/merged \
+  --outfile model/qwen2.5-1.5b-2bit.gguf \
+  --outtype q2_k \
+  --pad-vocab
+```
+4. Copy the `.gguf` file on your phone and load with **Llama Chat** App.

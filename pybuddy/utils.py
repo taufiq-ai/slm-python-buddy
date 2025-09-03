@@ -139,7 +139,7 @@ def merge_ft_model(
     output_path: str = f"{settings.FTMODEL_DIR}/merged", 
     device="auto",
 ) -> None:
-    model = load_ft_model_from_disk(
+    model, tokenizer = load_ft_model_from_disk(
         base_model_path=base_model_path,
         lora_adapter_path=lora_adapter_path,
         device=device 
