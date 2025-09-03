@@ -2,7 +2,8 @@ import time
 import structlog
 import argparse
 
-from pybuddy.inference import infer_model, load_ft_model
+from pybuddy.inference import infer_model
+from pybuddy.utils import load_ft_model_from_disk
 
 logger = structlog.get_logger(__name__)
 
@@ -64,7 +65,7 @@ def cmd():
         help="Maximum number of tokens to generate in the response",
     )
     args = parser.parse_args()
-    model, tokenizer = load_ft_model(
+    model, tokenizer = load_ft_model_from_disk(
         base_model_path=args.base_model,
         lora_adapter_path=args.ftmodel,
         device=args.device,

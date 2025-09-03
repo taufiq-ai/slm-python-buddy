@@ -36,3 +36,18 @@ uv run python pybuddy/inference.py "what is loop?" --max_tokens 512 --base-model
 ```bash
 uv run python pybuddy/chat.py --base-model <path_to_base_model> --ftmodel <path_to_fine_tuned_model> --device "auto"
 ```
+
+
+## Mobile Deployment
+Convert into GGUF file for Mobile Phone
+```
+
+```
+### Option X: MLC LLM
+```bash
+# install mlc llm
+# cpu
+uv pip install --pre -U -f https://mlc.ai/wheels mlc-llm-nightly-cpu mlc-ai-nightly-cpu
+# or cuda 12.3
+uv pip install --pre -U -f https://mlc.ai/wheels mlc-llm-nightly-cu123 mlc-ai-nightly-cu123
+```

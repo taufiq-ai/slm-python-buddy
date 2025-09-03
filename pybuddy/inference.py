@@ -9,8 +9,8 @@ from pybuddy.utils import (
     load_model_from_disk,
     load_tokenizer_from_disk,
     show_model_info,
+    load_ft_model_from_disk,
 )
-from pybuddy.optimization import load_4bit_quantized_model
 
 logger = structlog.get_logger("__name__")
 
@@ -60,26 +60,6 @@ def infer_model(
     return response
 
 
-def load_ft_model(base_model_path: str, lora_adapter_path: str, device: str = "auto"):
-    # logger.info(
-    #     "Loading Fine-tuned Model",
-    #     base_model_path=base_model_path,
-    #     lora_adapter_path=lora_adapter_path,
-    #     device=device,
-    # )
-    tokenizer = load_tokenizer_from_disk(model_path=base_model_path)
-    model = load_4bit_quantized_model(model_path=base_model_path, device=device)
-    model = PeftModel.from_pretrained(model=model, model_id=lora_adapter_path)
-    logger.info(
-        "Loaded Fine-tuned Model",
-        base_model_path=base_model_path,
-        lora_adapter_path=lora_adapter_path,
-        device=device,
-    )
-    show_model_info(model)
-    return model, tokenizer
-
-
 def cmd():
     # for single prompt
     # Usage: python inference.py "what is loop?" --max_tokens 512 --base-model model/Qwen/Qwen2.5-Coder-1.5B-Instruct --ftmodel model/ft_model/lora-adapter --device auto
@@ -103,7 +83,7 @@ def cmd():
         help="Device to run the model on (e.g., 'cpu', 'cuda', 'auto')",
     )
     args = parser.parse_args()
-    model, tokenizer = load_ft_model(
+    model, tokenizer = load_ft_model_from_disk(
         base_model_path=args.base_model,
         lora_adapter_path=args.ftmodel,
         device=args.device,

@@ -1,4 +1,5 @@
 # training.py
+# Later - make more customization from CMD
 import os
 from typing import Optional
 
@@ -16,11 +17,10 @@ from pybuddy import settings
 from pybuddy.utils import (
     load_tokenizer_from_disk,
     load_model_from_disk,
-)
-from pybuddy.optimization import (
     load_4bit_quantized_model,
-    load_peft_model,
+    load_model_with_peft_config,
 )
+
 from data.preprocess import create_dataset_from_json
 
 
@@ -181,7 +181,7 @@ if __name__ == "__main__":
     tokenizer = load_tokenizer_from_disk(model_path=model_path)
     pretrained_model, tokenizer = load_model_from_disk(
         model_path=model_path,
-        device="cpu",
+        device=DEVICE,
     )
 
     # Load 4-bit quantized model
@@ -191,7 +191,7 @@ if __name__ == "__main__":
     )
 
     # Load PEFT model
-    peft_model = load_peft_model(quantized_model)
+    peft_model = load_model_with_peft_config(quantized_model)
 
     # Train the model
     train_model(
