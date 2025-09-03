@@ -18,9 +18,9 @@ uv run python scripts/download_pretrained_model.py --model-name <hf_model_name> 
 uv run python scripts/download_pretrained_model.py --model-name Qwen/Qwen2.5-Coder-1.5B-Instruct --model-dir model --device auto
 ```
 
-### infer pre-trained models
+### Infer pre-trained model
 ```bash
-uv run infer-pretrained.py "what is list comprehension?" --max_tokens 500 --model_path <path_to_pretrained_model_dir>  --device <cpu_or_cuda>
+uv run scripts/infer_pretrained_model.py "what is list comprehension?" --max_tokens 500 --model_path <path_to_pretrained_model_dir>  --device <cpu_or_cuda>
 ```
 
 ### Fine-tune on custom dataset
@@ -80,3 +80,9 @@ llama.cpp/build/bin/llama-cli -m model/Qwen/qwen2.5-1.5b-q8-03092025.gguf -p "Wh
 ```
 
 5. Copy the `.gguf` file on your phone and load with **Llama Chat** App.
+
+
+## Upload model to Hugging Face
+```shell
+
+```
