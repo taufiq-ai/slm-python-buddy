@@ -44,9 +44,14 @@ uv run scripts/infer_pretrained_model.py "What is list comprehension?" --max_tok
 ```
 
 ### 3. Fine-tune with 4bit-Quantization and LoRA Config
+1. Finetuning BASEMODEL  
 ```bash
 # Customize params in pybuddy/training.py (more options TBD)
-uv run python pybuddy/training.py
+uv run pybuddy/train.py --dataset_path data/data.json --model_path model/Qwen/Qwen2.5-Coder-1.5B-Instruct --output_dir model/ft_model
+```
+2. Finetune a finetuned model
+```bash
+uv run pybuddy/train.py --dataset_path data/python-code-instruction-dataset-kaggle-devastator.json --model_path model/Qwen/qwen2.5-1.5b-instruct-ft-merged --output_dir model/ft_model_04092025_0400
 ```
 
 ### 4. Inference with Fine-tuned Model
@@ -122,6 +127,11 @@ Convert the fine-tuned model to **GGUF** for offline inference on Android.
    uv run scripts/upload_to_hf.py --local_model_dir <path_to_dir> --hf_repo_id <username/repo_id> --repo_type model
    # Example:
    uv run scripts/upload_to_hf.py --local_model_dir model/gguf --hf_repo_id taufiq-ai/qwen2.5-coder-1.5-instruct-ft --repo_type model
+   ```
+   Alternatively use for simplicity
+   ```bash
+   export HF_TOKEN=<your_hf_token>
+   huggingface-cli upload taufiq-ai/qwen2.5-coder-1.5-instruct-ft model/gguf --repo-type model
    ```
 
 ## Project Structure

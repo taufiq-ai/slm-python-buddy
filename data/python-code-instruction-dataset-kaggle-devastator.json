@@ -1,0 +1,258 @@
+[
+    [
+        {"role": "user", "content": "Create a function to calculate the sum of a sequence of integers.\n\n[1, 2, 3, 4, 5]"},
+        {"role": "assistant", "content": "# Python code\n\ndef sum_sequence(sequence):\n  sum = 0\n  for num in sequence:\n    sum += num\n  return sum"}
+    ],
+    [
+        {"role": "user", "content": "Generate a Python code for crawling a website for a specific type of data.\n\nwebsite: www.example.com \ndata to crawl: phone numbers"},
+        {"role": "assistant", "content": "import requests\nimport re\n\ndef crawl_website_for_phone_numbers(website):\n    response = requests.get(website)\n    phone_numbers = re.findall('\\d{3}-\\d{3}-\\d{4}', response.text)\n    return phone_numbers\n    \nif __name__ == '__main__':\n    print(crawl_website_for_phone_numbers('www.example.com'))"}
+    ],
+    [
+        {"role": "user", "content": "Create a Python list comprehension to get the squared values of a list [1, 2, 3, 5, 8, 13].\n\n"},
+        {"role": "assistant", "content": "[x*x for x in [1, 2, 3, 5, 8, 13]]"}
+    ],
+    [
+        {"role": "user", "content": "Generate a python script to perform this action.\n\nGiven a string, remove all the consecutive duplicates from the string.\n\nInput: \"AAABBCCCD\""},
+        {"role": "assistant", "content": "def remove_duplicates(string): \n    result = \"\"\n    prev = '' \n \n    for char in string:\n        if char != prev: \n            result += char\n            prev = char\n    return result\n\nresult = remove_duplicates(\"AAABBCCCD\")\nprint(result)"}
+    ],
+    [
+        {"role": "user", "content": "Write a python script to generates random numbers between 0 and 9 that are divisible by 3.\n\n"},
+        {"role": "assistant", "content": "def generate_random_divisible_number():\n    import random\n    while True:\n        # Generate a random number\n        process = random.randint(0, 9)\n        # Check if the number is divisible by 3\n        if process % 3 == 0:\n            # If it is divisible, return it\n            return process"}
+    ],
+    [
+        {"role": "user", "content": "Write a Python code to get the third largest element in a given row.\n\n[12, 13, 13, 45, 22, 99]"},
+        {"role": "assistant", "content": "def third_largest(lst):\n    if len(lst) < 3:\n        return\n    distinct = []\n    for i in lst:\n        if i not in distinct:\n            distinct.append(i)\n    distinct.sort(reverse=True)\n    return distinct[2]"}
+    ],
+    [
+        {"role": "user", "content": "Generate a REST API with Python and Flask that allows users to create, read, update, and delete records from a database.\n\nNot applicable"},
+        {"role": "assistant", "content": "from flask import Flask, request\nfrom flask_sqlalchemy import SQLAlchemy\n\napp = Flask(name)\napp.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'\ndb = SQLAlchemy(app)\n\nclass Record(db.Model):\n id = db.Column(db.Integer, primary_key=True)\n name = db.Column(db.String(120), unique=True)\n\ndb.create_all()\n\n@app.route('/records', methods=['GET'])\ndef get_records():\n records = Record.query.all()\n return {'records':[record.name for record in records]}\n\n@app.route('/records', methods=['POST'])\ndef create_record():\n record = Record(name=request.json['name'])\n db.session.add(record)\n db.session.commit()\n return {'id': record.id}\n\n@app.route('/records/int:id', methods=['PUT'])\ndef update_record(id):\n record = Record.query.get(id)\n record.name = request.json['name']\n db.session.commit()\n return {'message': 'Record updated'}\n\n@app.route('/records/int:id', methods=['DELETE'])\ndef delete_record(id):\n Record.query.filter_by(id=id).delete()\n db.session.commit()\n return {'message': 'Record deleted'}\n\nif name == 'main':\n app.run(debug=True)"}
+    ],
+    [
+        {"role": "user", "content": "Create a Python function that takes in a string and a list of words and returns true if the string contains all the words in the list.\n\n'This is a test', ['test', 'this', 'is']"},
+        {"role": "assistant", "content": "def contains_words(input_string, words):\n for word in words:\n if word not in input_string:\n return False\n return True\n\nprint(contains_words('This is a test', ['test', 'this', 'is'])) # True"}
+    ],
+    [
+        {"role": "user", "content": "What should this Python program do?\n\ndef is_palindrome(s):\n    '''Write your code here.'''"},
+        {"role": "assistant", "content": "def is_palindrome(s):\n    '''This function returns True if the string s is a palindrome and False if it isn't.''' \n    return s == s[::-1]  # Checks if s is the same as its reverse."}
+    ],
+    [
+        {"role": "user", "content": "Create a Python program to sort and print out the elements of an array of integers.\n\n[17, 41, 5, 22, 54, 6, 29, 3, 13]"},
+        {"role": "assistant", "content": "arr = [17, 41, 5, 22, 54, 6, 29, 3, 13]\n\narr.sort()\n\nprint(arr)\n\n# Output: [3, 5, 6, 13, 17, 22, 29, 41, 54]"}
+    ],
+    [
+        {"role": "user", "content": "Generate a Python program that adds two then doubles the result.\n\n"},
+        {"role": "assistant", "content": "def double_add(num1, num2): \n    return (num1 + num2) * 2"}
+    ],
+    [
+        {"role": "user", "content": "Write a python program to extract the non-vowel words in a sentence.\n\nThis machine learning project is challenging."},
+        {"role": "assistant", "content": "def extract_words(sentence):\n    non_vowel_words = []\n    words = sentence.split()\n    vowels = ['a','e','i','o','u','A','E','I','O','U']\n    for word in words:\n        if not any(char in vowels for char in word):\n            non_vowel_words.append(word) \n    return non_vowel_words"}
+    ],
+    [
+        {"role": "user", "content": "Write a Python program to calculate the average of a list of positive integers and output the result.\n\nList of positive integers: [1, 5, 6, 7, 8]"},
+        {"role": "assistant", "content": "list_of_positive_integers = [1, 5, 6, 7, 8]\ntotal = sum(list_of_positive_integers)\n\navg = total/len(list_of_positive_integers)\n\nprint(\"The average of the list of positive integers is {}\".format(avg))"}
+    ],
+    [
+        {"role": "user", "content": "Develop a function in Python that prints out the Pascal's triangle for a given number of rows.\n\n"},
+        {"role": "assistant", "content": "def pascal_triangle(n): \n    trow = [1] \n    y = [0] \n    for x in range(max(n, 0)): \n        print(trow) \n        trow=[l+r for l,r in zip(trow + y, y + trow)] \n    return n>=1\n\npascal_triangle(5)"}
+    ],
+    [
+        {"role": "user", "content": "Implement a decision-making algorithm for a rock-paper-scissors game using Python.\n\n"},
+        {"role": "assistant", "content": "# Rock, paper, scissors game!\n\ndef play_game(player1, player2):\n    #  Define the winning rules\n    rules = {'rock': 'scissors', 'scissors': 'paper', 'paper': 'rock'}\n    if player1 == player2:\n        return 'It is a draw!'\n    elif rules[player1] == player2:\n        return 'Player 1 wins!'\n    elif rules[player2] == player1:\n        return 'Player 2 wins!'\n\n# Get user input\nplayer1 = input('Player 1, make a choice: rock, paper, or scissors? ').lower()\nplayer2 = input('Player 2, make a choice: rock, paper, or scissors? ').lower()\n\n# Start the game and get the result\nresult = play_game(player1, player2)\nprint(result)"}
+    ],
+    [
+        {"role": "user", "content": "Collate a machine learning model in Python that distinguishes between cats and dogs.\n\nA dataset of 800 images of cats and dogs"},
+        {"role": "assistant", "content": "import numpy as np\nimport keras\nfrom keras.layers import Dense, Conv2D, MaxPooling2D, Dropout, Flatten\nfrom keras.models import Sequential\nfrom keras.preprocessing.image import ImageDataGenerator\n\n# Create the neural network model\nmodel = Sequential()\n\n# Input layer\nmodel.add(Conv2D(32, (3, 3), input_shape = (64, 64, 3), activation = 'relu'))\n\n# Hidden layers\nmodel.add(MaxPooling2D(pool_size = (2, 2)))\nmodel.add(Dropout(0.3))\nmodel.add(Conv2D(64, (3, 3), activation = 'relu'))\nmodel.add(MaxPooling2D(pool_size = (2, 2)))\nmodel.add(Dropout(0.3))\nmodel.add(Conv2D(64, (3, 3), activation = 'relu'))\nmodel.add(MaxPooling2D(pool_size = (2, 2)))\nmodel.add(Dropout(0.3))\n\n# Output layer\nmodel.add(Flatten())\nmodel.add(Dense(units = 128, activation = 'relu'))\nmodel.add(Dense(units = 1, activation = 'sigmoid'))\n\n# Compile the model\nmodel.compile(loss = 'binary_crossentropy', optimizer = 'adam', metrics = ['accuracy'])\n\n# Create data generator\ndatagen = ImageDataGenerator(rescale = 1./255, shear_range = 0.2, zoom_range = 0.2, horizontal_flip = True)\n\n# Fit the model\ntrain_generator = datagen.flow_from_directory(directory = '/path/to/dataset', target_size = (64, 64), color_mode = 'rgb', class_mode = 'binary', batch_size = 32)\nmodel.fit_generator(generator = train_generator, steps_per_epoch = 800, epochs = 5, validation_data = test_generator, validation_steps = 200)"}
+    ],
+    [
+        {"role": "user", "content": "Write a Python program to find all the numbers divisible by a certain number within a certain range.\n\nint m=36, int n=74, int divisor=6"},
+        {"role": "assistant", "content": "def find_numbers_divisible_by(m, n, divisor):\n    divisible_numbers = []\n    for i in range(m, n+1):\n        if i % divisor == 0:\n            divisible_numbers.append(i)\n    return divisible_numbers"}
+    ],
+    [
+        {"role": "user", "content": "Implement a Python function that will take two strings and return true if the first string contains the second.\n\nquery = \"catering\"\nword = \"cat\""},
+        {"role": "assistant", "content": "def check_contains(query, word): \n    if query.find(word) != -1:\n        return True\n    return False\n\nresult = check_contains(query, word)"}
+    ],
+    [
+        {"role": "user", "content": "Write an algorithm in Python 3 that calculates the factorial of a number.\n\nNot applicable"},
+        {"role": "assistant", "content": "def factorial(n):\n if n == 0:\n  return 1\n else:\n  return n * factorial(n-1)"}
+    ],
+    [
+        {"role": "user", "content": "Develop a Python function to predict the class labels of a given set of data.\n\nThe dataset contains 4 features: Length, Width, Height and Weight."},
+        {"role": "assistant", "content": "# Load the dataset\nimport pandas as pd\ncsv_url = 'http://test.test/test.csv'\ndf = pd.read_csv(csv_url)\n\n# Split the dataset into features and label\nX = df.iloc[:, 0:4].values\ny = df.iloc[:, 4].values\n\n# Import the ML model\nfrom sklearn.tree import DecisionTreeClassifier\n\n# Create and fit the model\nmodel = DecisionTreeClassifier()\nmodel.fit(X, y)\n\n# Predict the label\ndef predict(data):\n    predicted_label = model.predict([data])\n    return predicted_label"}
+    ],
+    [
+        {"role": "user", "content": "Develop a Python program to generate random passwords that consist of 8 characters.\n\nNot applicable"},
+        {"role": "assistant", "content": "import string\nimport random\n\ndef generate_password():\n    chars = string.ascii_letters + string.digits\n    return ''.join(random.choice(chars) for _ in range(8))\n\npassword = generate_password()\nprint(password)"}
+    ],
+    [
+        {"role": "user", "content": "Generate a list using a while loop in Python and appends the current number to the list.\n\n"},
+        {"role": "assistant", "content": "my_list = []\n\nnum = 0\n\nwhile num < 10:\n    my_list.append(num)\n    num += 1\n\nprint(my_list)"}
+    ],
+    [
+        {"role": "user", "content": "Write a Python program to query Twitter to get the most recent tweets from a user.\n\nusername: @elonmusk"},
+        {"role": "assistant", "content": "import tweepy\n\n# Authenticate to Twitter\nauth = tweepy.OAuthHandler(\"CONSUMER_KEY\", \"CONSUMER_SECRET\")\nauth.set_access_token(\"ACCESS_TOKEN\", \"ACCESS_TOKEN_SECRET\")\n# Create API object\napi = tweepy.API(auth)\n\n# Get the most recent tweets from the given user\ntweets = api.user_timeline(screen_name=\"@elonmusk\")\n\nfor tweet in tweets:\n print(tweet.text)"}
+    ],
+    [
+        {"role": "user", "content": "Create a Python neural network model that takes in a given trajectory of stock prices and predicts the stock price for the next day.\n\n[10, 10.4, 10.5, 10.6, 10.7, 10.9, 11]"},
+        {"role": "assistant", "content": "import numpy as np\nimport tensorflow as tf\n\ndef create_model():\n    model = tf.keras.Sequential([\n        tf.keras.layers.Dense(64, activation='relu', input_shape=(7, )),\n        tf.keras.layers.Dense(1)\n    ])\n\n    model.compile(loss='mean_squared_error', \n                  optimizer='adam',\n                  metrics=['accuracy'])\n\n    return model\n    \nif __name__ == \"__main__\":\n    model = create_model()\n\n    input_data = np.array([[10, 10.4, 10.5, 10.6, 10.7, 10.9, 11]])\n    predictions = model.predict(input_data)\n\n    print(f\"Predicted stock price for the next day is: {predictions[0][0]}\")"}
+    ],
+    [
+        {"role": "user", "content": "Create a way to encrypt a message using a key in Python.\n\nmessage = \"Hello world!\"\nkey = \"secret\""},
+        {"role": "assistant", "content": "import hashlib\n\ndef encrypt(message, key):\n    encrypted_msg = \"\"\n    for char in message:\n        encrypted_msg += chr(ord(char) + ord(key[0]))\n    return encrypted_msg\n\nencrypted_msg = encrypt(message, key)\nprint(encrypted_msg)"}
+    ],
+    [
+        {"role": "user", "content": "Create a function in Python that takes two parameters and prints out the larger of them.\n\nparameter_1 = 7\nparameter_2 = 9"},
+        {"role": "assistant", "content": "def printMax(parameter_1, parameter_2):\n    if parameter_1 > parameter_2:\n        print(parameter_1)\n    else:\n      print(parameter_2)"}
+    ],
+    [
+        {"role": "user", "content": "Rewrite the following Python code by introducing list comprehensions.\n\neven_numbers = []\nfor i in range(1,21):\n    if i % 2 == 0:\n        even_numbers.append(i)"},
+        {"role": "assistant", "content": "even_numbers = [i for i in range(1, 21) if i % 2 == 0]"}
+    ],
+    [
+        {"role": "user", "content": "Develop an algorithm in Python to print Fibonacci series up to a given number.\n\n"},
+        {"role": "assistant", "content": "def fibonacci(n): \n    a = 0\n    b = 1\n    if n < 0: \n        print(\"Incorrect input\") \n    elif n == 0: \n        return a \n    elif n == 1: \n        return b \n    else: \n        for i in range(2,n): \n            c = a + b \n            a = b \n            b = c \n        return b \n      \nn = int(input(\"Enter a number: \"))\nprint(fibonacci(n))"}
+    ],
+    [
+        {"role": "user", "content": "Make the following code snippet into a function in Python3 capable of solving Any Sudoku puzzle\n\nboard = [\n    [7,8,0,4,0,0,1,2,0],\n    [6,0,0,0,7,5,0,0,9],\n    [0,0,0,6,0,1,0,7,8],\n    [0,0,7,0,4,0,2,6,0],\n    [0,0,1,0,5,0,9,3,0],\n    [9,0,4,0,6,0,0,0,5],\n    [0,7,0,3,0,0,0,1,2],\n    [1,2,0,0,0,7,4,0,0],\n    [0,4,9,2,0,6,0,0,7]\n]"},
+        {"role": "assistant", "content": "def solve_sudoku(board): \n  \n    # Utility function to find vacant cells \n    # Returns a boolean     \n    def find_vacant_cell(board, l): \n        for row in range(9): \n            for col in range(9): \n                if board[row][col] == 0: \n                    l[0] = row \n                    l[1] = col \n                    return True\n        return False\n  \n    # Utility function to check if a number  \n    # is not currently placed in a particular  \n    # row, column and block \n    def is_safe(board, row, col, num): \n  \n        # Check if 'num' is not already placed  \n        # in current row, current column  \n        # and current 3x3 box \n        for i in range(9): \n  \n            # Check the rows\n            if(board[row][i] == num): \n                return False\n  \n            # Check the columns \n            if(board[i][col] == num): \n                return False\n  \n            # Check the 3x3 boxes \n            if(board[(row//3)*3 + i//3][(col//3)*3 + i%3] == num): \n                return False\n  \n        return True\n  \n    # Solve the sudoku \n    def solve(board): \n        # 'l' is a list variable that keeps \n        # the record of row and col in \n        # find_vacant_cell function \n        l = [0, 0] \n  \n        # If there is no unassigned location, \n        # we are done \n        if (not find_vacant_cell(board, l)): \n            return True\n  \n        # Assigning the list values\n        row = l[0] \n        col = l[1] \n  \n        # consider digits 1 to 9 \n        for num in range(1, 10): \n  \n            # if it is a safe position\n            if (is_safe(board, row, col, num)): \n  \n                # make tentative assignment \n                board[row][col] = num \n  \n                # return if succcess\n                if (solve(board)): \n                    return True\n  \n                # failure, unmake and try again \n                board[row][col] = 0\n  \n        # trigger backtracking \n        return False\n  \n    #Driver Program \n    if (solve(board)): \n        for row in board: \n            print(row) \n    else: \n        print(\"No solution\")"}
+    ],
+    [
+        {"role": "user", "content": "Write a function in Python to calculate the sum of the digits in a given number.\n\n"},
+        {"role": "assistant", "content": "def sum_digits(num):\n    total = 0\n    while num > 0:\n        digit = num % 10\n        total += digit\n        num = num // 10\n    return total"}
+    ],
+    [
+        {"role": "user", "content": "Take the list of people below and create a Python dictionary with the names as keys and the ages as values.\n\nJohn (20), Jane (40), Alex (18), Peter (45)"},
+        {"role": "assistant", "content": "people_dict = {'John': 20, 'Jane': 40, 'Alex': 18, 'Peter': 45}"}
+    ],
+    [
+        {"role": "user", "content": "Develop a Python program to clearly understand the concept of recursion.\n\n"},
+        {"role": "assistant", "content": "# This program is to understand recursion in Python.\n\n# Define a recursive function to calculate the factorial of a number\ndef factorial(n):\n   if n == 1:\n      return 1\n   else:\n      return n * factorial(n - 1)\n\n# Calculate factorial of number 5\nresult = factorial(5)\nprint(\"Factorial of 5 is \", result) \n\n# Output: Factorial of 5 is 120"}
+    ],
+    [
+        {"role": "user", "content": "Generate a random 6-digits number in Python.\n\n"},
+        {"role": "assistant", "content": "import random\n\nnumber = random.randint(100000, 999999)\nprint(number)"}
+    ],
+    [
+        {"role": "user", "content": "Create a sorting algorithm in Python to sort strings by their length.\n\n[\"cat\", \"dog\", \"apple\", \"banana\"]"},
+        {"role": "assistant", "content": "def sort_by_length(strings):\n    for i in range(len(strings) - 1):\n        for j in range(i + 1, len(strings)):\n            if len(strings[i]) > len(strings[j]):\n                strings[i], strings[j] = strings[j], strings[i]\n    return strings\n\nunsorted_list = [\"cat\", \"dog\", \"apple\", \"banana\"]\n\nsorted_list = sort_by_length(unsorted_list)\n\nprint(sorted_list)"}
+    ],
+    [
+        {"role": "user", "content": "Write a Python function to get the maximum and minimum values in a given list.\n\nNot applicable"},
+        {"role": "assistant", "content": "def get_max_min(lst):\n min_value = lst[0]\n max_value = lst[0]\n \n for i in range(1, len(lst)):\n  if lst[i] > max_value:\n   max_value = lst[i]\n  if lst[i] < min_value:\n   min_value = lst[i]\n \n return (min_value, max_value)"}
+    ],
+    [
+        {"role": "user", "content": "Create a for loop in Python to iterate over a list of numbers and print only the even numbers.\n\nmy_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]"},
+        {"role": "assistant", "content": "for num in my_list:\n    if num % 2 == 0:\n        print(num)"}
+    ],
+    [
+        {"role": "user", "content": "Can you suggest a pure python alternative to declaring a Float32 array with numbers from 0 to 10?\n\n"},
+        {"role": "assistant", "content": "myArray = [float(i) for i in range(0,11)]"}
+    ],
+    [
+        {"role": "user", "content": "Construct a neural network model in Python to classify the MNIST data set correctly.\n\n"},
+        {"role": "assistant", "content": "import keras\n\n# Input layer\ninput_layer = keras.layers.Input(shape=(784,))\n\n# Hidden layer\nhidden_layer = keras.layers.Dense(128, \n                activation='relu')(input_layer)\n\n# Output layer\noutput_layer = keras.layers.Dense(10, \n                activation='softmax')(hidden_layer)\n\n# Model\nmodel = keras.Model(inputs=input_layer, outputs=output_layer)\n\n# Compile model\nmodel.compile(optimizer='adam', \n              loss='sparse_categorical_crossentropy',\n              metrics=['accuracy'])"}
+    ],
+    [
+        {"role": "user", "content": "Create a machine learning classifier in Python for categorizing user input.\n\n"},
+        {"role": "assistant", "content": "from sklearn.naive_bayes import MultinomialNB \n\n# Assuming an input string is passed to the function as a parameter\n\ndef classify_string(input_string):\n\n  # Feature extraction and transformation from string to numeric\n  features = . . .\n\n  # Create an instance of the classifier \n  model = MultinomialNB()\n\n  # Train the classifier on the data\n  model.fit(data, target)\n\n  # Make a prediction based on the input\n  prediction = model.predict([features])\n\n  # Return the prediction\n  return prediction"}
+    ],
+    [
+        {"role": "user", "content": "Implement a algorithm in Python for sorting two large lists A and B. The algorithm should take the first element of list A and compare it with the first element of list B. If it is greater, then it should add the element to the result list and move the pointer of B to the next element. If the element of A is smaller, the pointer should move to the next element of A, and so on.\n\nA = [3, 6, 8, 10, 11]\nB = [2, 5, 7, 12]"},
+        {"role": "assistant", "content": "def merge_sort(A, B):\n result = [] \n i, j = 0, 0\n\n# Compare elements and add lower one to result\nwhile i < len(A) and j < len(B):\n if A[i] < B[j]:\n result.append(A[i])\n i += 1\n else:\n result.append(B[j])\n j += 1\n\n# Add remaining elements\nresult += A[i:]\nresult += B[j:]\n\nreturn result\n\n#Test the algorithm\nA = [3, 6, 8, 10, 11]\nB = [2, 5, 7, 12]\n\nprint(merge_sort(A, B))\n# Output: [2, 3, 5, 6, 7, 8, 10, 11, 12]"}
+    ],
+    [
+        {"role": "user", "content": "Develop a program in Python for finding the longest common subsequence between two strings.\n\n\"ABCDF\", \"ABECD\""},
+        {"role": "assistant", "content": "def longest_common_subsequence(string1, string2):\n    table = [[0]*(len(string2)+1) for _ in range(len(string1)+1)]\n\n    for i, x in enumerate(string1):\n        for j, y in enumerate(string2):\n            if x == y:\n                table[i+1][j+1] = table[i][j]+1\n            else:\n                table[i+1][j+1] = max(table[i+1][j], table[i][j+1])\n\n    result = \"\"\n    x, y = len(string1), len(string2)\n    while x != 0 and y != 0:\n        if table[x][y] == table[x-1][y]:\n            x -= 1\n        elif table[x][y] == table[x][y-1]:\n            y -= 1\n        else:\n            result = string1[x-1] + result\n            x -= 1\n            y -= 1\n    return result\n\nresult = longest_common_subsequence(\"ABCDF\", \"ABECD\")\nprint(result)"}
+    ],
+    [
+        {"role": "user", "content": "Convert a given Python program to a C# program.\n\ndef power(x, y):\n    if y == 0:\n        return 1\n    else:\n        return x * power(x, y - 1)"},
+        {"role": "assistant", "content": "public int Power(int x, int y)\n{\n    if (y == 0)\n    {\n        return 1;\n    }\n    else\n    {\n        return x * Power(x, y - 1);\n    }\n}"}
+    ],
+    [
+        {"role": "user", "content": "Rewrite the following code in a different programming language.\n\n// JavaScript code\nlet arr = [1, 2, 3, 4, 5];\n\narr.forEach(item => {\n console.log(item * 2);\n});"},
+        {"role": "assistant", "content": "# Python code\narr = [1, 2, 3, 4, 5]\n\nfor item in arr:\n print(item * 2)"}
+    ],
+    [
+        {"role": "user", "content": "Create a TicTacToe game in Python.\n\n"},
+        {"role": "assistant", "content": "class TicTacToe:\n\ndef __init__(self):\n    self.board = [['_' for _ in range(3)] \n                   for _ in range(3)]\n    self.turn = 'x'\n    \ndef display(self):\n    for row in self.board:\n        print(' '.join(row))\n\n\ndef check_win(self):\n    board = self.board\n\n    # check if the player with the current turn has a row of three\n    for row in self.board:\n        if row.count(self.turn) == 3:\n            return True\n        \n    # check if the player with the current turn has a column of three\n    for col in range(3):\n        if board[0][col] == board[1][col] and board[1][col] == board[2][col] and board[2][col] == self.turn:\n            return True\n        \n    # check for the two diagonals\n    if board[0][0] == board[1][1] and board[1][1] == board[2][2] and board[2][2] == self.turn:\n        return True\n    if board[0][2] == board[1][1] and board[1][1] == board[2][0] and board[2][0] == self.turn:\n        return True\n    return False"}
+    ],
+    [
+        {"role": "user", "content": "Debug the provided Python code to make it run without errors.\n\nnum_list = [1, 2, 3, 4, 5]\n\nfor num in num_list\n print(\"Square of\", num \"is\", num*num)"},
+        {"role": "assistant", "content": "num_list = [1, 2, 3, 4, 5]\n\nfor num in num_list:\n print(\"Square of\", num, \"is\", num*num)"}
+    ],
+    [
+        {"role": "user", "content": "Build a Python program that identifies valid Leap Years.\n\n"},
+        {"role": "assistant", "content": "def is_leap(year):\n    if (year % 400 == 0): \n        return True\n    if (year % 100 == 0):  \n        return False\n    if (year % 4 == 0): \n        return True\n    else:\n        return False\n  \nyear = int(input())\nprint(is_leap(year))"}
+    ],
+    [
+        {"role": "user", "content": "Write a python program to read input from user and check if it is a valid number.\n\n"},
+        {"role": "assistant", "content": "while True:\n  num = input(\"Please enter a valid number: \")\n  if num.isdigit():\n    print(\"Valid number entered: \" + num)\n    break\n  else:\n    print(\"Invalid number entered - please try again.\")"}
+    ],
+    [
+        {"role": "user", "content": "Write a Python program to optimize the given cost function.\n\nC(x, y) = 2x + 9y"},
+        {"role": "assistant", "content": "def optimize_cost(x, y):\n    return 2*x + 9*y"}
+    ],
+    [
+        {"role": "user", "content": "Create a Python program that reads a matrix of size nxn and prints out the transpose of the matrix.\n\nn = 5"},
+        {"role": "assistant", "content": "def transpose(m): \n  \n    result = [[0 for x in range(len(m))] for y in range(len(m[0]))] \n  \n    # iterate through rows of m \n    for i in range(len(m)): \n        # iterate through columns of m \n        for j in range(len(m[0])): \n            result[j][i] = m[i][j] \n  \n    return result \n  \n# input matrix \nmatrix = [ \n            [1, 2, 3], \n            [4, 5, 6], \n            [7, 8, 9] \n          ] \n  \n# display output \nprint(transpose(matrix))"}
+    ],
+    [
+        {"role": "user", "content": "Write a python code to detect the palindrome words in a  given sentence.\n\nSentence: \"Was it a car or a cat I saw?\""},
+        {"role": "assistant", "content": "def detect_palindrome(sentence):\n words = sentence.split()\n palindromes = []\n for word in words:\n  if word == word[::-1]:\n   palindromes.append(word)\n return palindromes\n\nprint(detect_palindrome(\"Was it a car or a cat I saw?\"))\n# Output: ['Was', 'a', 'or', 'a', 'I']"}
+    ],
+    [
+        {"role": "user", "content": "Write an algorithm in Python that finds the longest increasing subarray in an array of integers.\n\narr = [1,2,5,6,3,2,7,8]"},
+        {"role": "assistant", "content": "def longestincreasingsequence(arr): \n  \n    n = len(arr) \n    lis = [1]*n \n\n    for i in range (1 , n): \n        for j in range(0 , i): \n            if arr[i] > arr[j] and lis[i]< lis[j] + 1 : \n                lis[i] = lis[j]+1\n\n    maximum = 0\n    for i in range(n): \n        maximum = max(maximum , lis[i])  \n\n    return maximum\n\nprint(longestincreasingsequence(arr))"}
+    ],
+    [
+        {"role": "user", "content": "Create a recursive function in Python that prints the values from 0 to n.\n\n5"},
+        {"role": "assistant", "content": "def print_values(n):\n    if n == 0:\n        return\n    else:\n        print(n)\n        print_values(n-1)\n\nprint_values(5)"}
+    ],
+    [
+        {"role": "user", "content": "Create a Python program to implement a selection sort algorithm\n\n"},
+        {"role": "assistant", "content": "def selection_sort(arr): \n    n = len(arr) \n  \n    # One by one move boundary of unsorted subarray \n    for i in range(n): \n        # Find the minimum element in unsorted array \n        min_index = i \n        for j in range(i+1, n): \n            if arr[min_index] > arr[j]: \n                min_index = j \n  \n        # Swap the found minimum element with the first element         \n        arr[i], arr[min_index] = arr[min_index], arr[i] \n  \n    return arr"}
+    ],
+    [
+        {"role": "user", "content": "Create a class in Python to count the instances of an object.\n\n"},
+        {"role": "assistant", "content": "class Counter:\n def __init__(self):\n  self.count = 0\n \ndef increment(self):\n  self.count += 1\n \ndef get_count(self):\n  return self.count"}
+    ],
+    [
+        {"role": "user", "content": "Create a Python program to take in two strings and determine if they are permutations of each other.\n\n"},
+        {"role": "assistant", "content": "def is_permutation(s1, s2):\n    if len(s1) != len(s2):\n        return False\n    \n    c1 = [0] * 256\n    c2 = [0] * 256\n\n    for i in range(len(s1)):\n        c1[ord(s1[i])] += 1\n        c2[ord(s2[i])] += 1\n\n    if c1 == c2:\n        return True\n    else:\n        return False"}
+    ],
+    [
+        {"role": "user", "content": "Build a Python class to manage a candies dictionary.\n\n{\n  \"sourpatchkids\":       10,\n  \"snickers\":            5\n}"},
+        {"role": "assistant", "content": "class Candies:\n    def __init__(self, candies):\n        self.candies = candies\n    \n    def add_candy(self, name, quantity):\n        self.candies[name] = quantity \n    \n    def remove_candy(self, name):\n        del self.candies[name]\n        \n    def get_list_candy(self):\n        return list(self.candies.keys())\n\ncandies = Candies({\"sourpatchkids\": 10, \"snickers\": 5})\ncandies.add_candy(\"mars\", 7)\ncandies.remove_candy(\"snickers\")\ncandy_list = candies.get_list_candy()"}
+    ],
+    [
+        {"role": "user", "content": "Write a Python expression that returns the element at index 2 of a list.\n\n[\"Apple\", \"Banana\", \"Cherry\", \"Date\"]"},
+        {"role": "assistant", "content": "list[2] # returns \"Cherry\""}
+    ],
+    [
+        {"role": "user", "content": "Create an object-oriented Python program for creating a vending machine. The program should have classes for creating items, updating items, and calculating item prices.\n\nNot applicable"},
+        {"role": "assistant", "content": "class Item():\n    def __init__(self, name, price, quantity):\n        self.name = name\n        self.price = price\n        self.quantity = quantity\n\n    def update_item(self, quantity):\n        self.quantity += quantity\n        \n    def get_item_price(self):\n        return self.price * self.quantity\n\nclass VendingMachine():\n    def __init__(self, items):\n        self.items = items\n\n    def calculate_total_price(self, items):\n        total_price = 0\n        for item in items:\n            total_price += item.get_item_price()\n        return total_price\n\n# Create your items\ncoke = Item('Coke', 1.00, 1)\nchips = Item('Chips', 0.75, 1)\n\n# Create your Vending machine \nvending_machine = VendingMachine([coke, chips])\n\n# Calculate total price\nprice = vending_machine.calculate_total_price([coke, chips])\n\nprint(price) \n\nOutput:\n1.75"}
+    ],
+    [
+        {"role": "user", "content": "Generate a python program that tests a user's input for a palindrome.\n\n"},
+        {"role": "assistant", "content": "def is_palindrome(inp):\n    rev_inp = inp[::-1]\n    if inp == rev_inp:\n        return True\n    else:\n        return False"}
+    ],
+    [
+        {"role": "user", "content": "Generate a loop in Python which iterates through a list and prints the values.\n\n"},
+        {"role": "assistant", "content": "for value in list_of_values:\n    print(value)"}
+    ],
+    [
+        {"role": "user", "content": "Can you design a function in Python to sort a list of tuples based on the second item in the tuple?\n\ntuples = [(\"b\", 0), (\"a\", 1), (\"c\", -1)]"},
+        {"role": "assistant", "content": "def sort_tuple(tuples):\n    # sort by 2nd item of the tuple\n    tuples.sort(key=lambda x: x[1])\n    return tuples\n\n# Test\ntuples = [(\"b\", 0), (\"a\", 1), (\"c\", -1)]\nsorted_tuples = sort_tuple(tuples)\nprint(sorted_tuples) # [(\"c\", -1), (\"b\", 0), (\"a\", 1)]"}
+    ],
+    [
+        {"role": "user", "content": "Generate a Python function to search an array of integers for a specific target integer.\n\nArray = [1, 5, 10, 15, 20], Target = 15"},
+        {"role": "assistant", "content": "def search(array, target):\n # Iterate over array\n for i in range(len(array)):\n # Check if current index equals target\n if array[i] == target:\n return i\n\nreturn -1\n\n# Test\narray = [1, 5, 10, 15, 20]\ntarget = 15\n\nindex = search(array, target)\n\nif index >= 0:\n print(f\"Target found at index {index}\")\nelse:\n print(\"Target not found\")\n\n# Output: Target found at index 3"}
+    ],
+    [
+        {"role": "user", "content": "Develop an HTTP API in Python to retrieve the top 10 latest news articles from a given website.\n\n"},
+        {"role": "assistant", "content": "import requests\nfrom bs4 import BeautifulSoup\nfrom datetime import datetime\n\ndef get_latest_articles(url):\n    r = requests.get(url)\n    html = r.text\n    soup = BeautifulSoup(html, \"html.parser\")\n    articles = soup.find_all('article')\n    latest_articles = []\n    for article in articles:\n        pub_date = article.find('time')['datetime']\n        if (datetime.now() - datetime.fromisoformat(pub_date)).total_seconds() < 1814400:\n            latest_articles.append(article.text)\n    return latest_articles[: 10]"}
+    ],
+    [
+        {"role": "user", "content": "Create a classification algorithm in Python to distinguish between cats and dogs.\n\n"},
+        {"role": "assistant", "content": "# Import Python libraries\nimport numpy as np\nimport pandas as pd\nimport matplotlib.pyplot as plt\nimport seaborn as sns\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.preprocessing import LabelEncoder\nfrom sklearn.svm import SVC\nfrom sklearn.metrics import accuracy_score \n\n# Load data\ndata = pd.read_csv('data.csv')\n\n# Preprocess data\nX = data[['Height','Weight','Length']].values\ny = data['Label'].values\n\n# Encode labels\nencoder = LabelEncoder()\ny_encoded = encoder.fit_transform(y)\n\n# Split data\nX_train, X_test, y_train, y_test = train_test_split(X, y_encoded, test_size=0.2)\n\n# Train classifier\nclf = SVC()\nclf.fit(X_train, y_train)\n\n# Make predictions \ny_pred = clf.predict(X_test)\n\n# Evaluate accuracy\naccuracy = accuracy_score(y_test, y_pred)\n\nprint('Classification accuracy: ', accuracy * 100, '%')"}
+    ]
+]

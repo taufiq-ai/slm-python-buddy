@@ -34,7 +34,7 @@ def create_dataset_from_json(
     # Convert to HF Dataset
     dataset = Dataset.from_list(processed_data)
     logger.info(
-        "Loaded HF Dataset", dataset=dataset, 
-        raw_dataset=raw_dataset, processed_data=processed_data
+        "Loaded HF Dataset", dataset=dataset[:2], count=len(dataset),
+        raw_dataset=raw_dataset[:2], processed_data=processed_data[:2]
     )
     return dataset
