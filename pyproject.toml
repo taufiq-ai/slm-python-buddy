@@ -16,4 +16,5 @@ dependencies = [
     "bitsandbytes>=0.47.0",
     "black>=25.1.0",
     "evaluate>=0.4.5",
+    "huggingface-hub>=0.34.4",
 ]
