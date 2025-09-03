@@ -136,16 +136,29 @@ def load_ft_model_from_disk(
 def merge_ft_model(
     base_model_path: str = f"{settings.MODEL_DIR}/{settings.BASEMODEL}", 
     lora_adapter_path: str = f"{settings.FTMODEL_DIR}/lora-adapter", 
+    use_quantized_base_model: bool = True,
     output_path: str = f"{settings.FTMODEL_DIR}/merged", 
     device="auto",
+    dtype="auto",
 ) -> None:
-    model, tokenizer = load_ft_model_from_disk(
-        base_model_path=base_model_path,
-        lora_adapter_path=lora_adapter_path,
-        device=device 
-    )
+    if use_quantized_base_model:
+        # Merging quantized base model and LoRA Adapter might be problematic to convert into gguf file using llama.cpp
+        model, tokenizer = load_ft_model_from_disk(
+            base_model_path=base_model_path,
+            lora_adapter_path=lora_adapter_path,
+            device=device 
+        )
+    else:
+        # Merge BASE_MODEL and LoRA Adapter
+        model, tokenizer = load_model_from_disk(
+            model_path=base_model_path, 
+            device=device,
+            dtype=dtype,
+        )
+        model = PeftModel.from_pretrained(model, lora_adapter_path)
     merged_model = model.merge_and_unload()
     merged_model.save_pretrained(output_path)
+    tokenizer.save_pretrained(output_path)
 
 
 def show_model_info(model):
