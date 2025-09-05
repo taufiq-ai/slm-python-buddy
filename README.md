@@ -4,15 +4,15 @@ An offline Python coding assistant that runs on your phone. Fine-tune small lang
 
 ## What it does
 
-- **Fine-tune** small language models on Python instruction datasets using LoRA
+- **Fine-tune** small language models on Python instruction datasets using LoRA  
 **Convert & Quantize** models to GGUF format (Q8: ~1.5GB) for mobile deployment  
-- **Deploy** offline on Android devices for Python learning and coding help
-- **Answer** questions like "What is a loop?" or "Explain list comprehension" with ~10-15 tokens/s on mid-range phones
+- **Deploy** offline on Android devices for Python learning and coding help  
+- **Answer** questions like "What is a loop?" or "Explain list comprehension" with ~10-15 tokens/s on mid-range phones  
 
 Perfect for students and developers who want AI coding assistance without internet dependency or privacy concerns.
 
 **Finetuned GGUF models are available here:**
-- **HuggingFace:** https://huggingface.co/taufiq-ai/qwen2.5-coder-1.5-instruct-ft **(preferred)**  
+- **HuggingFace:** https://huggingface.co/taufiq-ai/qwen2.5-coder-1.5-instruct-ft *(preferred)*  
 - **Ollama:** https://ollama.com/taufiq-ai/qwen2.5-coder-1.5b-instruct-ft-taufiq-04092025  
 
 
@@ -31,14 +31,20 @@ export PYTHONPATH=.
 ## Usage
 
 ### 1. Download Pre-trained Model from HuggingFace
-`uv run python -m scripts.download_pretrained_model --model-name <hf_model_name> --model-dir <dir> --device <auto|cpu|cuda>`
+```sh
+# syntax
+uv run python -m scripts.download_pretrained_model --model-name <hf_model_name> --model-dir <dir> --device <auto|cpu|cuda>
+```
 ```bash
 # example:
 uv run python -m scripts.download_pretrained_model --model-name Qwen/Qwen2.5-Coder-1.5B-Instruct --model-dir model --device auto
 ```
 
 ### 2. Infer Pre-trained Model
-`uv run -m scripts.infer_pretrained_model "<prompt>" --max_tokens <tokens> --model_path <path_to_model> --device <auto|cpu|cuda>`
+```sh
+# syntax
+uv run -m scripts.infer_pretrained_model "<prompt>" --max_tokens <tokens> --model_path <path_to_model> --device <auto|cpu|cuda>
+```
 ```bash
 # example
 uv run -m scripts.infer_pretrained_model "What is list comprehension?" --max_tokens 500 --model_path model/Qwen/Qwen2.5-Coder-1.5B-Instruct --device auto
@@ -98,7 +104,10 @@ uv run -m pybuddy.train \
 
 ### 4. Inference Fine-tuned Model
 **1. Single Prompt**:  
-`uv run python -m pybuddy.inference "<prompt>" --max_tokens <max_tokens> --base-model <path/to/base_model> --ftmodel <path_to_finetuned_lora_adapter> --device <auto|cpu|cuda>`
+```sh
+# syntax
+uv run python -m pybuddy.inference "<prompt>" --max_tokens <max_tokens> --base-model <path/to/base_model> --ftmodel <path_to_finetuned_lora_adapter> --device <auto|cpu|cuda>
+```
 ```bash
 # example
 uv run python -m pybuddy.inference \
@@ -110,7 +119,10 @@ uv run python -m pybuddy.inference \
 ```
 
 **2. Chat Mode (Long Context)**:  
-`uv run python -m pybuddy.chat --base-model <path/to/base_model> --ftmodel <path/to/lora_adapter> --device <auto|cpu|cuda>`
+```sh
+# syntax
+uv run python -m pybuddy.chat --base-model <path/to/base_model> --ftmodel <path/to/lora_adapter> --device <auto|cpu|cuda>
+```
 ```bash
 # example
 uv run python -m pybuddy.chat \
