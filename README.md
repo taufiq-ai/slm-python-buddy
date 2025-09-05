@@ -5,7 +5,7 @@ An offline Python coding assistant that runs on your phone. Fine-tune small lang
 ## What it does
 
 - **Fine-tune** small language models on Python instruction datasets using LoRA  
-**Convert & Quantize** models to GGUF format (Q8: ~1.5GB) for mobile deployment  
+- **Convert & Quantize** models to GGUF format (Q8: ~1.5GB) for mobile deployment  
 - **Deploy** offline on Android devices for Python learning and coding help  
 - **Answer** questions like "What is a loop?" or "Explain list comprehension" with ~10-15 tokens/s on mid-range phones  
 
