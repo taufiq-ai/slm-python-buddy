@@ -1,145 +1,193 @@
 # SLM-Python-Buddy
 
-A Python framework to build and deploy a fine-tuned, on-device small language model (SLM) for code assistance. Which is optimized for low-resource Android devices (e.g., Redmi Note 11, 4GB RAM).
+An offline Python coding assistant that runs on your phone. Fine-tune small language models (like Qwen2.5-Coder-1.5B) and deploy them as lightweight GGUF files for mobile devices.
 
-## Why This Project?
+## What it does
 
-- **Goal**: Enable an offline, lightweight Language Model based Python code assistant for mobile devices.
-- **Process**: Fine-tune `Qwen2.5-Coder-1.5B-Instruct` model with PEFT, convert to GGUF (~800MB-1.5GB), and deploy for fast, offline inference.
-- **Use Case**: Assist Python learners with coding queries on low-resource devices.
-- **Why GGUF**: Compact format for mobile compatibility, balancing quality and size.
+- **Fine-tune** small language models on Python instruction datasets using LoRA
+**Convert & Quantize** models to GGUF format (Q8: ~1.5GB) for mobile deployment  
+- **Deploy** offline on Android devices for Python learning and coding help
+- **Answer** questions like "What is a loop?" or "Explain list comprehension" with ~10-15 tokens/s on mid-range phones
 
-*NOTE: The finetuned guff model files are available here: https://huggingface.co/taufiq-ai/qwen2.5-coder-1.5-instruct-ft*
+Perfect for students and developers who want AI coding assistance without internet dependency or privacy concerns.
+
+**Finetuned GGUF models are available here:**
+- **HuggingFace:** https://huggingface.co/taufiq-ai/qwen2.5-coder-1.5-instruct-ft **(preferred)**  
+- **Ollama:** https://ollama.com/taufiq-ai/qwen2.5-coder-1.5b-instruct-ft-taufiq-04092025  
 
 
-## Quick Start
+## Quick Start  
 
-1. **Install Dependencies**:
-   ```bash
-   pipx install uv
-   git clone https://github.com/taufiq-ai/slm-python-buddy.git
-   cd slm-python-buddy
-   cp .env.example .env
-   uv venv
-   uv sync
-   export PYTHONPATH=.
-   ```
+```bash
+pipx install uv
+git clone https://github.com/taufiq-ai/slm-python-buddy.git
+cd slm-python-buddy
+cp .env.example .env
+uv venv
+uv sync
+export PYTHONPATH=.
+```
 
 ## Usage
 
-### 1. Download Pre-trained Model
+### 1. Download Pre-trained Model from HuggingFace
+`uv run python -m scripts.download_pretrained_model --model-name <hf_model_name> --model-dir <dir> --device <auto|cpu|cuda>`
 ```bash
-# Syntax:
-uv run python scripts/download_pretrained_model.py --model-name <hf_model_name> --model-dir <dir> --device <auto|cpu|cuda>
-# Example:
-uv run python scripts/download_pretrained_model.py --model-name Qwen/Qwen2.5-Coder-1.5B-Instruct --model-dir model --device auto
+# example:
+uv run python -m scripts.download_pretrained_model --model-name Qwen/Qwen2.5-Coder-1.5B-Instruct --model-dir model --device auto
 ```
 
 ### 2. Infer Pre-trained Model
+`uv run -m scripts.infer_pretrained_model "<prompt>" --max_tokens <tokens> --model_path <path_to_model> --device <auto|cpu|cuda>`
 ```bash
-# Syntax:
-uv run scripts/infer_pretrained_model.py "<prompt>" --max_tokens <tokens> --model_path <path_to_model> --device <cpu|cuda>
-# Example:
-uv run scripts/infer_pretrained_model.py "What is list comprehension?" --max_tokens 500 --model_path model/Qwen/Qwen2.5-Coder-1.5B-Instruct --device cpu
+# example
+uv run -m scripts.infer_pretrained_model "What is list comprehension?" --max_tokens 500 --model_path model/Qwen/Qwen2.5-Coder-1.5B-Instruct --device auto
 ```
 
 ### 3. Fine-tune with 4bit-Quantization and LoRA Config
-1. Finetuning BASEMODEL  
+**1. Finetuning Pretrained Model**  
 ```bash
-# Customize params in pybuddy/training.py (more options TBD)
-uv run pybuddy/train.py --dataset_path data/data.json --model_path model/Qwen/Qwen2.5-Coder-1.5B-Instruct --output_dir model/ft_model
+# syntax
+uv run -m pybuddy.train \
+  --dataset_path <path/to/dataset.json> \
+  --model_path <path/to/base/model> \
+  --output_dir <path/to/output> \
+  --batch_size <int> \
+  --grad_accum <int> \
+  --lr <float> \
+  --epochs <int> \
+  --max_length <int>
 ```
-2. Finetune a finetuned model
 ```bash
-uv run pybuddy/train.py --dataset_path data/python-code-instruction-dataset-kaggle-devastator.json --model_path model/Qwen/qwen2.5-1.5b-instruct-ft-merged --output_dir model/ft_model_04092025_0400
+# example
+uv run -m pybuddy.train \
+  --dataset_path data/data.json \
+  --model_path model/Qwen/Qwen2.5-Coder-1.5B-Instruct \
+  --output_dir model/ft_model \
+  --batch_size 2 \
+  --grad_accum 4 \
+  --lr 2e-4 \
+  --epochs 3 \
+  --max_length 4096
+```
+**2. Finetuning Finetuned Model**  
+```bash
+# Syntax
+uv run -m pybuddy.train \
+ --dataset_path <path/to/dataset.json> \
+ --model_path <path/to/merged/model> \
+ --output_dir <path/to/output> \
+ --batch_size <int> \
+ --grad_accum <int> \
+ --lr <float> \
+ --epochs <int> \
+ --max_length <int>
+```
+```bash
+# example
+uv run -m pybuddy.train \
+ --dataset_path data/python-code-inst-dataset.json \
+ --model_path model/Qwen/qwen2.5-1.5b-instruct-ft-merged \
+ --output_dir model/ft_model_04092025_0400 \
+ --batch_size 2 \
+ --grad_accum 4 \
+ --lr 2e-4 \
+ --epochs 3 \
+ --max_length 4096
 ```
 
-### 4. Inference with Fine-tuned Model
-- **Single Prompt**:
-   `uv run python -m pybuddy.inference "<prompt>" --max_tokens <max_tokens> --base-model <path_to_base_model> --ftmodel <path_to_finetuned_lora_adapter> --device <auto|cpu|cuda>`
-  ```bash
-  # Example:
-  uv run python -m pybuddy.inference "What is a loop?" --max_tokens 512 --base-model model/Qwen/Qwen2.5-Coder-1.5B-Instruct --ftmodel model/ft_model_04092025_0400/lora-adapter --device auto
-  ```
+### 4. Inference Fine-tuned Model
+**1. Single Prompt**:  
+`uv run python -m pybuddy.inference "<prompt>" --max_tokens <max_tokens> --base-model <path/to/base_model> --ftmodel <path_to_finetuned_lora_adapter> --device <auto|cpu|cuda>`
+```bash
+# example
+uv run python -m pybuddy.inference \
+ "What is a loop?" \
+ --max_tokens 512 \
+ --base-model model/Qwen/Qwen2.5-Coder-1.5B-Instruct \
+ --ftmodel model/ft_model_04092025_0400/lora-adapter \
+ --device auto
+```
 
-- **Chat Mode (Long Context)**:
-  ```bash
-  # Syntax:
-  uv run python pybuddy/chat.py --base-model <path_to_base_model> --ftmodel <path_to_lora> --device <auto|cpu>
-  # Example:
-  uv run python pybuddy/chat.py --base-model model/Qwen/Qwen2.5-Coder-1.5B-Instruct --ftmodel model/ft_model/lora-adapter --device auto
-  ```
+**2. Chat Mode (Long Context)**:  
+`uv run python -m pybuddy.chat --base-model <path/to/base_model> --ftmodel <path/to/lora_adapter> --device <auto|cpu|cuda>`
+```bash
+# example
+uv run python -m pybuddy.chat \
+  --base-model model/Qwen/Qwen2.5-Coder-1.5B-Instruct \
+  --ftmodel model/ft_model_04092025_0400/lora-adapter \
+  --device auto
+```
 
-### 5. Deploy on Android (Offline)
-Convert the fine-tuned model to **GGUF** for offline inference on Android.
+### 5. Run on Android (Offline)
+Convert your fine-tuned model to GGUF format for offline Android inference.
 
-1. **Install llama.cpp**:
-   ```bash
-   git clone https://github.com/ggerganov/llama.cpp
-   cd llama.cpp
-   cmake -B build
-   cmake --build build --config Release -j 8
-   ```
+**Step 1: Setup llama.cpp**  
+```bash
+git clone https://github.com/ggerganov/llama.cpp
+cd llama.cpp
+cmake -B build
+cmake --build build --config Release -j 8
+```
 
-2. **Merge Base Model and LoRA**:
-   ```python
-   # uv run python
-   from pybuddy import utils
-   utils.merge_ft_model(
-       base_model_path="model/Qwen/Qwen2.5-Coder-1.5B-Instruct",
-       lora_adapter_path="model/ft_model/lora-adapter",
-       output_path="model/Qwen/qwen2.5-1.5b-instruct-ft-merged"
-   )
-   ```
+**Step 2: Merge base model with LoRA adapter**  
+```py
+# uv run python
+from pybuddy import utils
+utils.merge_ft_model(
+    base_model_path="model/Qwen/Qwen2.5-Coder-1.5B-Instruct",
+    lora_adapter_path="model/ft_model/lora-adapter", 
+    output_path="model/Qwen/qwen2.5-1.5b-instruct-ft-merged"
+)
+```
 
-3. **Convert to GGUF (4-bit or 8-bit)**:
-   ```bash
-   # Syntax:
-   uv run python llama.cpp/convert_hf_to_gguf.py <ft_model_dir> --outfile <gguf_models/filename.gguf> --outtype <q4_0|q8_0>
-   # Example (8-bit, ~1.5GB):
-   uv run python llama.cpp/convert_hf_to_gguf.py model/Qwen/qwen2.5-1.5b-instruct-ft-merged \
-     --outfile model/gguf/qwen2.5-1.5b-q8-03092025.gguf \
-     --outtype q8_0
-   ```
+**Step 3: Convert to GGUF**  
+```bash
+# 8-bit (~1.5GB, better quality)
+uv run python llama.cpp/convert_hf_to_gguf.py \
+  model/Qwen/qwen2.5-1.5b-instruct-ft-merged \
+  --outfile model/gguf/qwen2.5-1.5b-q8.gguf \
+  --outtype q8_0
+```
 
-4. **Test GGUF File on Computer**:
-   ```bash
-   # Syntax:
-   llama.cpp/build/bin/llama-cli -m <model/gguf/filename.gguf> -p "<prompt>"
-   # Example:
-   llama.cpp/build/bin/llama-cli -m model/gguf/qwen2.5-1.5b-q8-03092025.gguf -p "What is list comprehension?"
-   ```
+**Step 4: Test locally**  
+```sh
+llama.cpp/build/bin/llama-cli \
+  -m model/gguf/qwen2.5-1.5b-q8.gguf \
+  -p "What is list comprehension?"
+```
 
-5. **Run on Android**:
-   - Copy the GGUF file (~800MB for `q4_0`, ~1.5GB for `q8_0`) to your Android device.
-   - Install an App that can load local llm model such as **Llama Chat**.
-   - Import the GGUF file for offline inference (~10-15 tokens/s on Snapdragon 685, 8GB RAM).
+**Step 5: Deploy to Android**  
+- Copy **GGUF** file to your Android device  
+- Install **Llama Chat** or similar local LLM app  
+- Import the GGUF file  
+- Enjoy offline inference (~10-15 tokens/s on mid-range devices)  
+
 
 ### 6. Share Models on Hugging Face
-1. **Set Up Token**:
-   - Create a Write token at [Hugging Face Settings](https://huggingface.co/settings/tokens).
-   - Add to `.env` as `HF_TOKEN`.
 
-2. **Upload Models**:
-   ```bash
-   # Syntax:
-   uv run scripts/upload_to_hf.py --local_model_dir <path_to_dir> --hf_repo_id <username/repo_id> --repo_type model
-   # Example:
-   uv run scripts/upload_to_hf.py --local_model_dir model/gguf --hf_repo_id taufiq-ai/qwen2.5-coder-1.5-instruct-ft --repo_type model
-   ```
-   Alternatively use for simplicity
-   ```bash
-   export HF_TOKEN=<your_hf_token>
-   huggingface-cli upload taufiq-ai/qwen2.5-coder-1.5-instruct-ft model/gguf --repo-type model
-   ```
+**Step 1: Setup HF Token**  
+- Create a Write token at [Hugging Face Settings](https://huggingface.co/settings/tokens)  
+- Add `HF_TOKEN=your_token_here` to your `.env` file  
 
-## Project Structure
-- `pybuddy/`: Core scripts for training, inference, and utilities.
-- `scripts/`: Tools for downloading/uploading models.
-- `.env`: Environment variables (e.g., `HF_TOKEN`).
+**Step 2: Upload Models**
 
-## Notes
-- **Quantization**: Use `q4_0` (~800MB) or `q8_0` (~1.5GB) for Android. Avoid `tq2_0` due to quality issues.
-- **Performance**: ~5-10 tokens/s on low-resource devices (Redmi Note 11 - 4GB RAM).
-- **Compatibility**: Llama Chat works well with `q8_0` GGUF files.
-- **Contributing**: PRs and issues welcome!.
+*Option A: Using custom script*  
+```bash
+uv run -m scripts.upload_to_hf \
+ --local_model_dir model/gguf \
+ --hf_repo_id username/repo-name \
+ --repo_type model
+```
+
+*Option B: Using HF CLI (simpler)*
+```sh
+export HF_TOKEN=your_hf_token
+huggingface-cli upload username/repo-name model/gguf --repo-type model
+```
+
+## Acknowledgments
+
+Special thanks to **[LalokaLabs](https://lalokalabs.co/)** for providing GPU compute resources that made this project possible. The fine-tuning was conducted on their **Quadro RTX 8000 (46GB VRAM)** infrastructure.
+
+Without access to high-end GPU resources, training and experimenting with language models would be significantly more challenging for individual developers and researchers.
