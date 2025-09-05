@@ -38,9 +38,9 @@ def download_model(model_name: str, model_dir: str = settings.MODEL_DIR, device=
 def main():
     # Usage: python scripts/download_pretrained_model.py --model-name <model_name> --model-dir <dir_to_save_model> --device <device>
     parser = argparse.ArgumentParser(description="HuggingFace Model management script")
-    parser.add_argument("--model-name", default=settings.BASEMODEL, help="Model name to download")
-    parser.add_argument("--model-dir", default=settings.MODEL_DIR, help="Path to save model")
-    parser.add_argument("--device", default="auto", help="Accelator device: cpu or auto ")
+    parser.add_argument("--model-name", type=str, default=settings.BASEMODEL, help="Model name to download")
+    parser.add_argument("--model-dir", type=str, default=settings.MODEL_DIR, help="Path to save model")
+    parser.add_argument("--device", type=str, default="auto", help="Accelator device: cpu or auto ")
     args = parser.parse_args()
 
     download_model(args.model_name, args.model_dir, args.device)

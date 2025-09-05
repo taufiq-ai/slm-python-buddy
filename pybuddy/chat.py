@@ -45,16 +45,19 @@ def cmd():
     logger.info("Running Inference Script...")
     parser.add_argument(
         "--base-model",
+        type=str,
         default="model/Qwen/Qwen2.5-Coder-1.5B-Instruct",
         help="Path to base model",
     )
     parser.add_argument(
         "--ftmodel",
+        type=str,
         default="model/ft_model/lora-adapter",
         help="Path to the peft model's adapter",
     )
     parser.add_argument(
         "--device",
+        type=str,
         default="auto",
         help="Device to run the model on (e.g., 'cpu', 'cuda', 'auto')",
     )

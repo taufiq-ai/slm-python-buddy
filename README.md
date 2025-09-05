@@ -56,11 +56,10 @@ uv run pybuddy/train.py --dataset_path data/python-code-instruction-dataset-kagg
 
 ### 4. Inference with Fine-tuned Model
 - **Single Prompt**:
+   `uv run python -m pybuddy.inference "<prompt>" --max_tokens <max_tokens> --base-model <path_to_base_model> --ftmodel <path_to_finetuned_lora_adapter> --device <auto|cpu|cuda>`
   ```bash
-  # Syntax:
-  uv run python pybuddy/inference.py "<prompt>" --max_tokens <tokens> --base-model <path_to_base_model> --ftmodel <path_to_lora> --device <auto|cpu>
   # Example:
-  uv run python pybuddy/inference.py "What is a loop?" --max_tokens 512 --base-model model/Qwen/Qwen2.5-Coder-1.5B-Instruct --ftmodel model/ft_model/lora-adapter --device auto
+  uv run python -m pybuddy.inference "What is a loop?" --max_tokens 512 --base-model model/Qwen/Qwen2.5-Coder-1.5B-Instruct --ftmodel model/ft_model_04092025_0400/lora-adapter --device auto
   ```
 
 - **Chat Mode (Long Context)**:

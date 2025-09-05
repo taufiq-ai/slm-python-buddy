@@ -65,20 +65,23 @@ def cmd():
     # Usage: python inference.py "what is loop?" --max_tokens 512 --base-model model/Qwen/Qwen2.5-Coder-1.5B-Instruct --ftmodel model/ft_model/lora-adapter --device auto
     parser = argparse.ArgumentParser(description="Infer trained model")
     logger.info("Running Inference Script...")
-    parser.add_argument("prompt", help="Prompt")
-    parser.add_argument("--max_tokens", default=1024, help="max output tokens")
+    parser.add_argument("prompt", type=str, help="Prompt")
+    parser.add_argument("--max_tokens", type=int, default=1024, help="max output tokens")
     parser.add_argument(
         "--base-model",
+        type=str,
         default="model/Qwen/Qwen2.5-Coder-1.5B-Instruct",
         help="Path to base model",
     )
     parser.add_argument(
         "--ftmodel",
+        type=str,
         default="model/ft_model/lora-adapter",
         help="Path to the peft model's adapter",
     )
     parser.add_argument(
         "--device",
+        type=str,
         default="auto",
         help="Device to run the model on (e.g., 'cpu', 'cuda', 'auto')",
     )

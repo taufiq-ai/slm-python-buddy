@@ -107,10 +107,10 @@ def cmd():
     # Usage: `uv run infer-pretrained.py "what is list comprehension?"`
     parser = argparse.ArgumentParser(description="Test pre-trained version of Qwen")
     logger.info("Running Inference Script...")
-    parser.add_argument("prompt", help="Prompt")
-    parser.add_argument("--max_tokens", default=1024, help="max output tokens")
-    parser.add_argument("--model_path", default=f"{MODEL_DIR}/{BASEMODEL}", help="path to pretrained model directory")
-    parser.add_argument("--device", default="auto", help="device to run the model on")
+    parser.add_argument("prompt", type=str, help="Prompt")
+    parser.add_argument("--max_tokens", type=int, default=1024, help="max output tokens")
+    parser.add_argument("--model_path", type=str, default=f"{MODEL_DIR}/{BASEMODEL}", help="path to pretrained model directory")
+    parser.add_argument("--device", type=str, default="auto", help="device to run the model on")
     args = parser.parse_args()
 
     p_model, tokenizer = load_model_from_disk(
