@@ -9,7 +9,7 @@ An offline Python coding assistant that runs on your phone. Fine-tune small lang
 - **Deploy** offline on Android devices for Python learning and coding help  
 - **Answer** questions like "What is a loop?" or "Explain list comprehension" with ~10-15 tokens/s on mid-range phones  
 
-Perfect for students and developers who want AI coding assistance without internet dependency or privacy concerns.
+Perfect for students and developers who want AI coding assistance on their phone without internet dependency or privacy concerns.  
 
 **Finetuned GGUF models are available here:**
 - **HuggingFace:** https://huggingface.co/taufiq-ai/qwen2.5-coder-1.5-instruct-ft *(preferred)*  
