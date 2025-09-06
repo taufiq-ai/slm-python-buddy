@@ -140,72 +140,73 @@ uv run python -m pybuddy.chat \
   --device auto
 ```
 
-### 5. Run on Android (Offline)
-Convert your fine-tuned model to GGUF format for offline Android inference.
+### 6. Merge Finetuned LoRa Adapter with base model
 
-**Step 1: Setup llama.cpp**  
-```bash
-git clone https://github.com/ggerganov/llama.cpp
-cd llama.cpp
-cmake -B build
-cmake --build build --config Release -j 8
-```
-
-**Step 2: Merge base model with LoRA adapter**  
 ```py
 # uv run python
 from pybuddy import utils
 utils.merge_ft_model(
-    base_model_path="model/Qwen/Qwen2.5-Coder-1.5B-Instruct",
-    lora_adapter_path="model/ft_model/lora-adapter", 
-    output_path="model/Qwen/qwen2.5-1.5b-instruct-ft-merged"
+    base_model_path="<path_to_basemodel>" # "model/Qwen/Qwen2.5-Coder-1.5B-Instruct",
+    lora_adapter_path="<path_to_finetuned_lora_adapter>" #"model/ft_model/lora-adapter", 
+    output_path="<path_to_save_merged_model>" # "model/Qwen/qwen2.5-1.5b-instruct-ft-merged"
 )
 ```
 
-**Step 3: Convert to GGUF**  
+### 7. Run on Android (Offline)
+Convert your fine-tuned model to GGUF format for offline Android inference.
+
+**Step 1: Install llama.cpp**  
 ```bash
-# 8-bit (~1.5GB, better quality)
-uv run python llama.cpp/convert_hf_to_gguf.py \
-  model/Qwen/qwen2.5-1.5b-instruct-ft-merged \
-  --outfile model/gguf/qwen2.5-1.5b-q8.gguf \
+# NOTE: Make sure that you clone `llama.cpp` repo outside the `slm-python-buddy` project directory
+git clone https://github.com/ggerganov/llama.cpp
+cd llama.cpp
+cmake -B build
+cmake --build build --config Release -j 8
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
+Follow [llama.cpp build guide](https://github.com/ggml-org/llama.cpp/blob/master/docs/build.md) for more information.
+
+
+
+**Step 2: Convert to GGUF**  
+```bash
+# syntax
+~/llama.cpp$ python convert_hf_to_gguf.py \
+  ~/<path_to_project>/slm-python-buddy/<path_to_merged_model> \  
+  --outfile ~/<path_to_save>/<filename.gguf> \
+  --outtype <f32|f16|bf16|q8_0|tq1_0|tq2_0|auto>
+```
+```sh
+# example
+~/llama.cpp$ python ~/llama.cpp/convert_hf_to_gguf.py \
+  ~/slm-python-buddy/model/Qwen/qwen2.5-1.5b-instruct-ft-merged \
+  --outfile ~/slm-python-buddy/model/gguf/qwen2.5-1.5b-q8.gguf \
   --outtype q8_0
 ```
 
-**Step 4: Test locally**  
+**Step 3: Test locally**  
 ```sh
-llama.cpp/build/bin/llama-cli \
-  -m model/gguf/qwen2.5-1.5b-q8.gguf \
+# syntax:
+~/llama.cpp$ llama-cli \
+  -m <path_to_filename.gguf> \
+  -p "<prompt>"
+```
+
+```sh
+# example:
+~/llama.cpp$ llama-cli \
+  -m ~/slm-python-buddy/model/gguf/qwen2.5-1.5b-q8.gguf \
   -p "What is list comprehension?"
 ```
 
-**Step 5: Deploy to Android**  
+**Step 4: Deploy to Android**  
 - Copy **GGUF** file to your Android device  
-- Install **Llama Chat** or similar local LLM app  
+- Install **Llama Chat** or similar local LLM android/ios app  
 - Import the GGUF file  
 - Enjoy offline inference (~10-15 tokens/s on mid-range devices)  
 
-
-### 6. Share Models on Hugging Face
-
-**Step 1: Setup HF Token**  
-- Create a Write token at [Hugging Face Settings](https://huggingface.co/settings/tokens)  
-- Add `HF_TOKEN=your_token_here` to your `.env` file  
-
-**Step 2: Upload Models**
-
-*Option A: Using custom script*  
-```bash
-uv run -m scripts.upload_to_hf \
- --local_model_dir model/gguf \
- --hf_repo_id username/repo-name \
- --repo_type model
-```
-
-*Option B: Using HF CLI (simpler)*
-```sh
-export HF_TOKEN=your_hf_token
-huggingface-cli upload username/repo-name model/gguf --repo-type model
-```
 
 ## Acknowledgments
 

@@ -136,7 +136,7 @@ def load_ft_model_from_disk(
 def merge_ft_model(
     base_model_path: str = f"{settings.MODEL_DIR}/{settings.BASEMODEL}", 
     lora_adapter_path: str = f"{settings.FTMODEL_DIR}/lora-adapter", 
-    use_quantized_base_model: bool = True,
+    use_quantized_base_model: bool = False,
     output_path: str = f"{settings.FTMODEL_DIR}/merged", 
     device="auto",
     dtype="auto",
