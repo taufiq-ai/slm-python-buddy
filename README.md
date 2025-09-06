@@ -17,7 +17,7 @@ Perfect for students and developers who want AI coding assistance on their phone
 
 ## Demo
 
-Runs offline on mid-range phones. Tested on the following devices:  
+Runs offline smoothly on budget phones. Tested on the following devices:  
 - **Redmi Note 13 (Snapdragon 685, 8GB RAM):** ~5-10 tokens/s  
 - **Redmi Note 11 (Snapdragon 680, 4GB RAM):** ~5–7 tokens/s  
 
