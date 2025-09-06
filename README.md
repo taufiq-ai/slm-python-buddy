@@ -2,6 +2,8 @@
 
 An offline Python coding assistant that runs on your phone. Fine-tune small language models (like Qwen2.5-Coder-1.5B) and deploy them as lightweight GGUF files for mobile devices.
 
+*Note: This project is reusable across different domains and supports most HuggingFace models.*
+
 ## What it does
 
 - **Fine-tune** small language models on Python instruction datasets using LoRA  
