@@ -15,6 +15,15 @@ Perfect for students and developers who want AI coding assistance on their phone
 - **HuggingFace:** https://huggingface.co/taufiq-ai/qwen2.5-coder-1.5-instruct-ft *(preferred)*  
 - **Ollama:** https://ollama.com/taufiq-ai/qwen2.5-coder-1.5b-instruct-ft-taufiq-04092025  
 
+## Demo
+
+Runs offline on mid-range phones. Tested on the following devices:  
+- **Redmi Note 13 (Snapdragon 685, 8GB RAM):** ~5-10 tokens/s  
+- **Redmi Note 11 (Snapdragon 680, 4GB RAM):** ~5–7 tokens/s  
+
+🎥 **[Click here to watch the demo on youtube](https://www.youtube.com/watch?v=GkIkqUldQak)**
+
+
 
 ## Quick Start  
 
