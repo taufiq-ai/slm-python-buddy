@@ -20,7 +20,7 @@ Perfect for students and developers who want AI coding assistance on their phone
 - **Redmi Note 11** (Snapdragon 680, 4GB): ~7-10 tokens/s  
 - **AMD Ryzen 5 5000** (16GB RAM): ~80-120 tokens/s
 
-## Try the Model
+### Try Yourself
 **Finetuned models available:**
 - **HuggingFace:** https://huggingface.co/taufiq-ai/qwen2.5-coder-1.5-instruct-ft *(recommended)*
 - ~~**Ollama:** `ollama run taufiq-ai/qwen2.5-coder-1.5b-instruct-ft-taufiq-04092025`~~
