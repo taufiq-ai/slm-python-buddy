@@ -27,7 +27,7 @@ Perfect for students and developers who want AI coding assistance on their phone
 
 To try on phone, download the GGUF file and follow the demo video.
 
-**Quick test on computer/termux:**
+**Quick test using Python:**
 ```python
 # pip install llama-cpp-python huggingface-hub
 from llama_cpp import Llama
