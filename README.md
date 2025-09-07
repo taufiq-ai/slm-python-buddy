@@ -2,8 +2,6 @@
 
 An offline Python coding assistant that runs on your phone. Fine-tune small language models (like Qwen2.5-Coder-1.5B) and deploy them as lightweight GGUF files for mobile devices.
 
-*Note: This project is reusable across different domains and supports most HuggingFace models.*
-
 ## What it does
 
 - **Fine-tune** small language models on Python instruction datasets using LoRA  
@@ -13,21 +11,46 @@ An offline Python coding assistant that runs on your phone. Fine-tune small lang
 
 Perfect for students and developers who want AI coding assistance on their phone without internet dependency or privacy concerns.  
 
-**Finetuned GGUF models are available here:**
-- **HuggingFace:** https://huggingface.co/taufiq-ai/qwen2.5-coder-1.5-instruct-ft *(preferred)*  
-- **Ollama:** https://ollama.com/taufiq-ai/qwen2.5-coder-1.5b-instruct-ft-taufiq-04092025  
-
 ## Demo
 
-Runs offline smoothly on budget phones. Tested on the following devices:  
-- **Redmi Note 13 (Snapdragon 685, 8GB RAM):** ~5-10 tokens/s  
-- **Redmi Note 11 (Snapdragon 680, 4GB RAM):** ~5–7 tokens/s  
+🎥 **[Watch android demo on YouTube](https://www.youtube.com/watch?v=GkIkqUldQak)**
 
-🎥 **[Click here to watch the demo on youtube](https://www.youtube.com/watch?v=GkIkqUldQak)**
+**Performance on different devices:**
+- **Redmi Note 13** (Snapdragon 685, 8GB): ~10-15 tokens/s
+- **Redmi Note 11** (Snapdragon 680, 4GB): ~7-10 tokens/s  
+- **AMD Ryzen 5 5000** (16GB RAM): ~80-120 tokens/s
 
+## Try the Model
+**Finetuned models available:**
+- **HuggingFace:** https://huggingface.co/taufiq-ai/qwen2.5-coder-1.5-instruct-ft *(recommended)*
+- ~~**Ollama:** `ollama run taufiq-ai/qwen2.5-coder-1.5b-instruct-ft-taufiq-04092025`~~
 
+To try on phone, download the GGUF file and follow the demo video.
 
-## Quick Start  
+**Quick test on computer/termux:**
+```python
+# pip install llama-cpp-python huggingface-hub
+from llama_cpp import Llama
+
+model = Llama.from_pretrained(
+   repo_id="taufiq-ai/qwen2.5-coder-1.5-instruct-ft",
+   filename="qwen2.5-coder-1.5b-instruct-mt-04092025-v2.gguf" # use the latest gguf file
+)
+
+response = model.create_chat_completion(
+   messages=[
+       {"role": "system", "content": "You are a helpful python coding assistant."},
+       {"role": "user", "content": "How to install Python on Ubuntu?"}
+   ],
+   max_tokens=512
+)
+
+print(response['choices'][0]['message']['content'])
+```
+
+---
+
+## Quick Start 
 
 ```bash
 pipx install uv
