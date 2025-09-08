@@ -16,7 +16,7 @@ Perfect for students and developers who want AI coding assistance on their phone
 🎥 **[Watch android demo on YouTube](https://www.youtube.com/watch?v=GkIkqUldQak)**
 
 **Performance on different devices:**
-- **Redmi Note 13** (Snapdragon 685, 8GB): ~10-15 tokens/s
+- **Redmi Note 13** (Snapdragon 685, 8GB): ~7-12 tokens/s
 - **Redmi Note 11** (Snapdragon 680, 4GB): ~7-10 tokens/s  
 - **AMD Ryzen 5 5000** (16GB RAM): ~80-120 tokens/s
 
